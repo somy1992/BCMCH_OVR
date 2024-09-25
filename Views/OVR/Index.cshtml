@@ -1,0 +1,149 @@
+﻿@model BCMCHOVR.Models.OVRViewModal
+@{
+  
+    Layout = "~/Views/Shared/_LayoutOVR.cshtml";
+      string userName = User.Identity.Name;
+    var userModal = new UserModal().Get(userName);
+}
+
+<div style="margin:5px;margin-top:70px;text-align:right">
+    <input id="btnovr" type="button" class="btn btn-info btn-sm" value="New OVR Request" /> &nbsp;
+  
+    @if (Model.User.Admin)
+    {
+    <a href="/ovrs" class="btn btn-danger btn-sm">View All OVRs</a>
+    }
+</div>
+
+
+<div id="ovrlist" style=" margin-top:10px;background-color: dodgerblue ;padding:5px 10px;border-radius:12px;">
+</div>
+
+<div class="bckit-modal-box bckit-modal-box-full" id="bckit-modal-new">
+    <div class="bckit-modal-box-header">
+        
+        <label></label>
+      
+        <div style="display: flex; justify-content: space-between; align-items: center;font-weight: bold;">
+
+            <div>
+                
+                <span>@userModal.EmpCode</span> |
+                <span>@userModal.EmployeeName</span> |
+                <span>@userModal.Department</span> &nbsp;&nbsp;
+            </div>
+
+            <div>
+               
+                <span>@DateTime.Now.ToString("MM/dd/yyyy hh:mm tt")</span>
+            </div>
+        </div>
+      
+        <div class="bckit-modal-box-closebtn">
+            
+           
+            <img src="~/images/close-btn.svg" />
+        </div>
+    </div>
+    <div class="bckit-modal-box-body-full">
+        <div style="background-color:#D3D3D3;padding:0 10px;background-color: aliceblue;border-style: groove; padding: 1px 10px;" id="ovrn">
+            
+        
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="row">
+                        <div class="col-md-7">
+                            <label class="required" style="font-weight: bold;font-size: 14px;">Short Title</label>
+                            <input data-req="1" type="text" id="subject" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <label class="required" style="font-weight: bold;font-size: 14px;">Specific Location of Event</label>
+                            <input  data-req="1" type="text" id="location" class="form-control" />
+                        </div>
+                        <div class="col-md-3">
+                            <label class="required" style="font-weight: bold;font-size: 14px;">Incident Date</label>
+                            <input  data-req="1" id="date" type="date" class="form-control" />
+                        </div>
+                        <div class="col-md-3">
+                            <label class="required" style="font-weight: bold;font-size: 14px;">Incident Time</label>
+                            <input  data-req="1" id="time" type="time" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <label style="font-weight: bold;font-size: 14px;">Category</label>
+                            <select id="userclassification" class="form-control ">
+                                <option value="Select Category">--Select Category--</option>
+                         
+                            </select>
+                        </div>
+
+                        <div class="col-md-4">
+                            <label style="font-weight: bold;font-size: 14px;">Sub Category</label>
+                            <select id="Subcategory" class="form-control">
+                            </select>
+
+
+                        </div>
+
+                        <div class="col-md-8">
+                            <label style="font-weight: bold;font-size: 14px;">Patient UHID, Name, Mobile</label>
+                            <input id="patintcomplaint" type="text" class="form-control" />
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-10" style="margin:5px;">
+                            <label class="required" style="font-weight: bold;font-size: 14px;">Description of the event</label>
+                          
+                            <div style="border:solid 1px #000">
+                                <textarea data-req="1" id="description" class="form-control" style="height:150px;"></textarea>
+                                
+                            </div>
+                          
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-10">
+                            <label class="required" style="font-weight: bold;font-size: 14px;">Immediate correction done</label>
+                            <div style="border:solid 1px #000">
+                                <textarea data-req="1" id="ImmediateCorrection" class="form-control" style="height:150px;"></textarea>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="text-right" style="margin:5px;">
+                        <input id="btnsovr" type="button" class="btn btn-info btn-sm" value="Submit" />
+                        <input id="btnClr" type="button" class="btn btn-info btn-sm" value="Clear" />
+                    </div>
+
+                </div>
+                <div class="col-md-4">
+                    <div style="margin:20px 0">
+                        <label class="required" style="font-weight: bold;font-size: 14px;">Witness </label>
+                        <div style="position:relative">
+                            <input type="text" placeholder="Search Employee" class="form-control" id="txshemp" />
+                        </div>
+                        <div id="dvsremp">
+                        </div>
+                    </div>
+                    <hr />
+                    <div style="margin:20px 0">
+                        <label>Attach Evidence  <a href="#" id="filetrigger">Add +</a></label>
+                        <input type="file" multiple id="ifile" accept="image/*" style="display:none;" />
+                        <div id="fileList"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="bckit-modal-overlay" id="bckit-modal"></div>
+@section Scripts
+{
+    <script src="~/js/site.js"></script>
+    <script src="~/js/bc-webkit.js"></script>
+}

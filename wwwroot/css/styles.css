@@ -1,0 +1,171 @@
+﻿/* BS Overrides*/
+.form-control, .form-control-req {
+    display: block;
+    width: 100%;
+    height: calc(1.5em + .75rem + 2px);
+    padding: .375rem .75rem;
+    font-size: inherit;
+    font-weight: 400;
+    line-height: inherit;
+    color: inherit;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    border-radius: .15rem;
+}
+.form-control-req {
+    border: 1px solid #ff0000;
+    background-color:#ffcaca;
+}
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&display=swap');
+body {
+    background-color: #eff5f7;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 13px;
+}
+
+label.required::after {
+    content: "*";
+    display: inline-block;
+    color: #ff0000;
+    position: relative;
+    top: 2px;
+    padding-left: 4px;
+    font-weight: bold;
+}
+
+
+header {
+    background-color: #448aff;
+    box-shadow: 0 1px 2.94px 0.06px rgba(4, 26, 55, 0.16);
+    color:#fff;
+}
+.appbarlogo {
+    position: relative;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    font-size: 28px;
+    height: 56px;
+    text-align: center;
+    text-transform: uppercase;
+    width: 235px;
+    padding: 10px;
+}
+
+.search-pn {
+    max-height: 350px;
+    overflow: auto;
+    border: solid 1px #b3d7ff;
+    background-color: #f2f2f2;
+    position: absolute;
+    width: 100%;
+    -webkit-box-shadow: 7px 7px 5px 0px rgb(50 50 50 / 75%);
+    -moz-box-shadow: 7px 7px 5px 0px rgba(50, 50, 50, 0.75);
+    box-shadow: 0px 7px 5px 0px rgb(50 50 50 / 27%);
+    border-radius: 3px;
+    min-width: 350px;
+    right: 0;
+    z-index:9999;
+}
+
+    .search-pn ul, .search-pn li {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    .search-pn li {
+        padding: 5px 10px;
+        font-size: 12px;
+        border-bottom: solid 1px #b3d7ff;
+        color: #084d97;
+        background-color: rgb(245 250 255);
+        display:block;
+    }
+        .search-pn li:hover {
+            background-color: rgb(68 138 255 / 0.35);
+            cursor: pointer;
+        }
+        .search-pn li label {
+            margin: 0;
+            display: block;
+        }
+        .search-pn li label:first-child
+        {
+            font-weight:bold;
+            color:#084d97;
+        }
+label.itemsel {
+    color: #000;
+    display: inline-block;
+    padding: 3px 24px 3px 13px;
+    background-color: #a2cfff;
+    border-radius: 12px;
+    margin: 5px 3px;
+    font-size: 12px;position:relative;
+    z-index:1;
+}
+
+.light-box, .light-box-red {
+    margin: 10px 0;
+    text-align: justify;
+    padding: 5px 10px;
+    background-color: #f1f1f1a1;
+    border-radius: 6px;
+    border: solid 1px #ececec;
+}
+.light-box-red {
+    background-color: #ffdbdba1;
+    border: solid 1px #ffd3d3;
+}
+
+.file-group-list a {
+    display: inline-block;
+    padding: 1px 13px;
+    background-color: #d4e4ff;
+    border-radius: 4px;
+    font-size: 11px;
+    color: #000;
+    margin: 0 3px;
+}
+label.label-title-in, label.label-title {
+    color: #636363;
+    margin: 0;
+    font-weight:bold;
+}
+label.label-title {
+    display: block;
+}
+label.label-title-in:after{
+    content:":";
+    margin:0 10px;
+}
+.btn{
+    border-radius:0;
+}
+
+.trumbowyg-box, .trumbowyg-editor {
+     display: block; 
+     position: relative; 
+     border: none;
+     width: 100%; 
+     min-height: 150px;
+     margin:5px 0;
+     background-color:#fff;
+
+}
+.highlight-lreg {
+    display: inline-block;
+    background-color: #fae3e3;
+    padding: 2px 8px;
+    border-radius: 6px;
+    margin:3px 0;
+}
+.fa fa-refresh {
+    font-size: 20px;
+
+}

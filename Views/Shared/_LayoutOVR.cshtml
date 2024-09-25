@@ -1,0 +1,55 @@
+﻿@{
+    string userName= User.Identity.Name;
+    var userModal =  new UserModal().Get(userName);
+}
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - BCMCHOVR</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link href="~/Plugins/Select2/css/select2.min.css" rel="stylesheet" />
+    <link href="~/lib/sweetalert2/sweetalert2.min.css" rel="stylesheet" />
+    <link href="~/Plugins/trumbowyg/ui/trumbowyg.min.css" rel="stylesheet" />
+    <link href="~/css/styles.css" rel="stylesheet" />
+    <link href="~/css/bc-webkit.css" rel="stylesheet" />
+
+    <style>
+        .header-nav a {
+            color: #fff;
+            margin: 0 5px;
+        }
+    </style>
+</head>
+<body style="padding-top: 80px;">
+    <header style="position:fixed; height:39px; top:0; width:99vw; display:flex;margin:0; border-radius: 10px; z-index:1000;">
+        <div class="appbarlogo" style="flex:1; height:38px;">BCMCH OVR</div>
+        <div style="margin:5px" class="header-nav"><span>@userModal.EmployeeName</span> |   <a href="/page">Home</a> <a href="javascript:void(0);" onclick="signout();">SignOut</a></div>
+    </header>
+    <div class="container-fluid">
+        @RenderBody()
+    </div>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/Plugins/Select2/js/select2.full.min.js"></script>
+    <script src="~/Plugins/trumbowyg/trumbowyg.min.js"></script>
+    <script src="~/lib/sweetalert2/sweetalert2.min.js"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+
+    <script>
+        function signout()
+        {
+            if(confirm("Are you sure want to SignOut?"))
+            {
+                location.replace("/logout");
+            }
+        }
+    </script>
+</body>
+</html>
