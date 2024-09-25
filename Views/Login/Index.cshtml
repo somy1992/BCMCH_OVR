@@ -1,0 +1,63 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>BCMCH OVR </title>
+    <link href="~/lib/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/lib/font-awesome/css/all.min.css" rel="stylesheet" />
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="~/css/login.css" rel="stylesheet" />
+    <link href="~/lib/jquery-toast-plugin/jquery.toast.min.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="login-box">
+        <div class="login-box-body">
+            <div class="text-center">
+                <img src="~/images/bcmch_logo.png" class="bc-logo" />
+            </div>
+            <p class="login-box-msg">Login</p>
+            
+            <form action="/login" method="post">
+                <div class="form-group has-feedback">
+                    <input required name="txtLoginName" type="text" id="txtLoginName" class="form-control" placeholder="User Name">
+                    <span class="form-control-feedback"><i class="far fa-envelope"></i></span>
+                </div>
+                <div class="form-group has-feedback">
+                    <input required name="txtPassword" type="password" id="txtPassword" class="form-control"
+                           placeholder="Password">
+                    <span class="form-control-feedback"><i class="fas fa-lock"></i></span>
+                </div>
+                <input type="submit" name="btnLogin" value="Sign In" id="btnLogin" class="btn btn-primary btn-block btn-flat">
+                <label id="lblMessage" class="text-center">&nbsp;</label>
+                <div class="bc-user-info-text">
+                Please use your ESSP credentials to log in.
+                </div>
+
+            </form> <div class="text-right" style="margin:10px 0 -10px 0;font-size:10px;color:rgb(128 128 128 / 0.71)"><i>Developed by devteam#mi <br />apps@bcmch.com</i></div>
+        </div>
+    </div>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/jquery-toast-plugin/jquery.toast.min.js"></script>
+
+    @if (ViewBag.ErrorMessage != null)
+    {
+        <script>
+            $.toast({
+                heading: 'BCMCH OVR',
+                text:'@ViewBag.ErrorMessage',
+                position: 'top-center',
+                icon: 'error',
+                showHideTransition: 'slide',
+                allowToastClose: false,
+                hideAfter: 5000,
+                stack: false,
+                loader: false
+            })
+        </script>
+    }
+
+</body>
+</html>

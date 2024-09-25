@@ -1,0 +1,88 @@
+﻿@model BCMCHOVR.Models.OVRListViewModal
+@{
+    int counter = 0;
+}
+<div class="bc-webkit-tabs bc-webkit-tabs-theme-flat" id="bckit_tab_ovr">
+    <div class="bc-webkit-tabshead">
+        <ul>
+            <li data-tabtarget="tab1" class="tab-selected">Awaiting your Action</li>
+            <li data-tabtarget="tab2">My OVRs</li>
+
+        </ul>
+    </div>
+    <div class="tab-panels">
+
+        <div class="tab-panel" data-tabsource="tab1">
+            @if (Model.PendingActions == null)
+            {
+                <label>No data found</label>
+            }
+            else
+            {
+                counter = 0;
+                <table class="table" style="width:100%">
+                    <tr>
+                        <th>#</th>
+                        <th style="width:150px">OVR Number</th>
+                        <th>Action</th>
+                        <th>Subject</th>
+                        <th>Reported By</th>
+                        <th>Date</th>
+                        <th>Status</th>
+
+                    </tr>
+
+                    @foreach (System.Data.DataRow item in Model.PendingActions.Rows)
+                    {
+                        counter++;
+                <tr>
+                    <td>@counter</td>
+                    <td><a href="/ovr/view/@item["UniqueKey"]">@item["OVRNo"]</a></td>
+                    <td>@item["Action"]</td>
+                    <td>@item["OvrSubject"]</td>
+                    <td>@item["RequesterDetails"]</td>
+                    <td>@item["Date"]</td>
+                    <td>@item["RequestStatus"]</td>
+                </tr>
+                    }
+                </table>
+            }
+        </div>
+        <div class="tab-panel" data-tabsource="tab2">
+            @if (Model.MyRequests == null)
+            {
+                <label>No data found</label>
+            }
+            else
+            {
+                counter = 0;
+                <table class="table" style="width:100%">
+                    <tr>
+                        <th>#</th>
+                        <th style="width:150px">OVR Number</th>
+                        <th>Subject</th>
+                        <th>Reported By</th>
+                        <th>Date</th>
+                        <th>Status</th>
+
+                    </tr>
+                    @foreach (System.Data.DataRow item in Model.MyRequests.Rows)
+                    {
+                        counter++;
+                        <tr>
+                            <td>@counter</td>
+                            <td><a href="/ovr/view/@item["UniqueKey"]">@item["OVRNo"]</a></td>
+                            <td>@item["OvrSubject"]</td>
+                            <td>@item["RequesterDetails"]</td>
+                            <td>@item["Date"]</td>
+                            <td>@item["RequestStatus"]</td>
+                        </tr>
+                    }
+                </table>
+            }
+        </div>
+    </div>
+</div>
+
+
+

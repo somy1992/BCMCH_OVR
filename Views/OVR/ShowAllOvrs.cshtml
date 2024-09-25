@@ -1,0 +1,193 @@
+﻿
+@model BCMCHOVR.Models.OVRViewModal
+@{
+    Layout = "~/Views/Shared/_LayoutOVR.cshtml";
+    
+  }
+
+<head>
+    <link href="~/lib/font-awesome/css/all.min.css" rel="stylesheet" />
+    <link href="~/css/styles.css" rel="stylesheet" />
+    <script src="~/lib/xlsx/xlsx.full.min.js"></script>
+    <style>
+        .button {
+            background-color: forestgreen;
+            margin: 5px;
+            height: 25px;
+            border-radius: 5px;
+            color: white;
+            border-color: forestgreen
+        }
+
+        .filtersdiv {
+            color: dodgerblue;
+            background-color: #F3F5F6;
+            border-style: ridge;
+            padding-top: 2px;
+            width: 100%;
+            height: 42px;
+            unicode-bidi: isolate;
+            position: fixed;
+            overflow-y: auto;
+            top: 40px;
+            z-index: 100;
+        }
+
+        .header-cell {
+            background-color: steelblue;
+            color: white;
+            width: 100%;
+            padding-bottom: 5px;
+        }
+
+        .table-ovr {
+            table-layout: auto;
+            border-radius: 10px;
+            grid-column-gap: 5px;
+            width: 100%;
+            overflow-y: auto;
+            overflow-x: hidden;
+            position: sticky;
+            border: 1px solid #ccc;
+            border-collapse: collapse;
+            white-space: nowrap;
+        }
+
+            .table-ovr td, .table-ovr th {
+                width: 200px;
+                padding: 3px 8px;
+                border: 1px solid #ccc;
+            }
+
+            .table-ovr tbody tr:nth-child(odd) {
+                background-color: #f2f2f2;
+            }
+
+            .table-ovr tbody tr:nth-child(even) {
+                background-color: #ffffff;
+            }
+    </style>
+</head>
+
+    <br />
+    <div class="filtersdiv">
+        <button id="reset-btn" class="button">Reset  <i class="fas fa-filter filter-icon"></i></button>
+        <button id="export-btn" class="button">Export to Excel  <i class="fas fa-file-excel"></i></button>
+        <button id="refresh-btn" class="button">Refresh  <i class="fas fa-sync-alt"></i></button>
+        <b style="font-size: 16px; text-align: center; padding-left: 50px;">All OVR</b>
+    </div>
+
+     <table class="table-ovr,table-ovr td, table-ovr th">
+        <thead>
+            <tr class="header-cell">
+                <th>S.No<br>#<br /></th>
+
+                <th>
+                    OVR Number <i class="fas fa-filter filter-icon"></i> <br>
+                    <input type="text" id="filter-ovr-number">
+                </th>
+
+                <th>
+                    Created By <i class="fas fa-filter filter-icon"></i><br>
+                    <input type="text" id="filter-created-by">
+                </th>
+                <th>
+                    Created Date <i class="fas fa-filter filter-icon"></i> <br>
+                    <input type="date" id="filter-created-date">
+                </th>
+                <th>
+                    Created Time <i class="fas fa-filter filter-icon"></i> <br>
+                    <input type="time" id="filter-created-time">
+                </th>
+                <th>
+                    Status<i class="fas fa-filter filter-icon"></i><br>
+                    <select id="filter-status">
+                        <option value="">All</option>
+                        <option value="Created">Created</option>
+                        <option value="Closed">Closed</option>
+                    </select>
+                </th>
+                <th>
+                    Subject <i class="fas fa-filter filter-icon"></i><br>
+                    <input type="text" id="filter-subject">
+                </th>
+
+                <th>
+                    Description <i class="fas fa-filter filter-icon"></i> <br>
+                    <input type="text" id="filter-description">
+                </th>
+                <th>
+                    Immediate Correction <i class="fas fa-filter filter-icon"></i> <br>
+                    <input type="text" id="filter-Immediate-correction">
+                </th>
+
+                <th>
+                    Reported To <i class="fas fa-filter filter-icon"></i> <br>
+                    <input type="text" id="filter-reported-to">
+                </th>
+                <th>
+                    User Category <i class="fas fa-filter filter-icon"></i><br>
+                    <input type="text" id="filter-user-category">
+                </th>
+                <th>
+                    Sub Category <i class="fas fa-filter filter-icon"></i><br>
+                    <input type="text" id="filter-sub-category">
+                </th>
+               <th>
+                    Event Location <i class="fas fa-filter filter-icon"></i><br>
+                    <input type="text" id="filter-event-location">
+                </th>
+                <th>
+                    Event Date <i class="fas fa-filter filter-icon"></i><br>
+                    <input type="date" id="filter-event-date">
+                </th>
+                <th>
+                    Event Time <i class="fas fa-filter filter-icon"></i> <br>
+                    <input type="time" id="filter-event-time">
+                </th>
+                <th>
+                    Patient Info <i class="fas fa-filter filter-icon"></i> <br>
+                    <input type="text" id="filter-patient-info">
+                </th>
+                <th>
+                    Incident Type <i class="fas fa-filter filter-icon"></i><br>
+                    <input type="text" id="filter-incident-type">
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (int i = 0; i < Model.OvrDetails.Rows.Count; i++)
+            {
+                var item = Model.OvrDetails.Rows[i];
+                <tr>
+                    <td>@(i + 1)</td>
+                    <td><a href="/ovr/view/@item["UniqueKey"]">@item[1]</a></td>
+                    <td>@item["RequesterDetails"]</td>
+                    <td>@item["CreatedAt"].ToString()</td>
+                    <td>@item["CreatedTime"].ToString()</td>
+                    <td>@item["RequestStatus"]</td>
+                    <td>@item["OVRSubject"]</td>
+                    <td>@item["DescriptionOfTheEvent"].ToString()</td>
+                    <td>@item["ImmediateCorrection"].ToString()</td>
+                    <td>@item["ReportedTo"]</td>
+                    <td>@item["UserCategoryName"]</td>
+                    <td>@item["SubCategory"].ToString()</td>
+                     <td>@item["EventLocation"]</td>
+                    <td>@item["EventDate"].ToString()</td>
+                    <td>@item["EventTime"].ToString()</td>
+                    <td>@item["PatientInfo"]</td>
+                    <td>@item["IncidentType"]</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+
+@section Scripts
+
+{
+    <script src="~/js/site.js"></script>
+    <script src="~/js/bc-webkit.js"></script>
+}
+
+

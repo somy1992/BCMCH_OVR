@@ -1,0 +1,80 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <title>Test</title>
+</head>
+<body>
+    <form id="form" name="form" action="/uploader" enctype="multipart/form-data" method="post">
+        <div class="buttons">
+            <div class="upload-button">
+                <div class="label">Click me!</div>
+                <input id="files" onchange="onFileUploadChange('files');" name="files" type="file" size="1" multiple />
+                <input type="button" value="Upload" onclick="uploadFiles('files');" />
+                <ul id="list"></ul>
+            </div>
+        </div>
+    </form>
+
+    <script>
+        function onFileUploadChange(inputId) {
+
+            if (!window.FileReader) {
+                alert("The file API isn't supported on this browser yet.");
+                return;
+            }
+
+            var input = document.getElementById(inputId);
+            var files = input.files;
+            $("#list").html('');
+            for (var i = 0; i != files.length; i++) {
+
+                var p= $("<li/>");
+                var c=$("<span/>").html("X").appendTo(p);
+                var s=$("<span/>").html(files[i].name).appendTo(p);
+                $("#list").append($("<li/>").append(p));
+            }
+        }
+
+        function uploadFiles(inputId) {
+            var input = document.getElementById(inputId);
+            if (input.files.length == 0) {
+                return;
+            }
+            var files = input.files;
+            var formData = new FormData();
+            var fileSize = 0;
+            for (var i = 0; i != files.length; i++) {
+                fileSize += files[i].size;
+                formData.append("files", files[i]);
+            }
+            fileSize = (fileSize/1024)
+            if (fileSize > 5120) {
+                alert("File size is exceeded")
+                return;
+            }
+
+            $.ajax(
+                {
+                    url: "/ovr/savfiles",
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    type: "POST",
+                    success: function (data) {
+                        alert("Files Uploaded!");
+                    }
+                }
+            );
+        }
+    </script>
+
+</body>
+</html>

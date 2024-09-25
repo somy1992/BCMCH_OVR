@@ -1,0 +1,56 @@
+﻿@model BCMCHOVR.Models.Pages.NewOvrPageModel
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>NewOvr</title>
+    <style>
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content:left;
+        }
+        .item {
+            width: 250px;
+            background-color: #f5f5f5;
+            margin: 3px;
+            padding: 5px;
+            border-radius: 3px;
+            border: solid 1px #e4e4e4;
+            padding: 10px;
+        }
+
+            .item li, .item ul {
+                margin: 0;
+                padding: 0px;
+                list-style: none
+            }
+        .itemCaption
+        {
+            font-weight:bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+
+        @foreach (var item in Model.Categories)
+        {
+            <div class="item">
+               <div class="itemCaption">@item.CategoryName</div>
+                <ul>
+                    @foreach (var opt in item.CategoryOptions)
+                    {
+                        <li><input type="checkbox" name="@opt.OptionID" id="@opt.OptionID"/><label   for="@opt.OptionID">@opt.OptionText</label></li>
+                    }
+                </ul>
+            </div>
+        }
+    </div>
+</body>
+</html>

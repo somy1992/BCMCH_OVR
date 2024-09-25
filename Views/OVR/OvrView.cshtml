@@ -1,0 +1,379 @@
+﻿@model BCMCHOVR.Models.OVRViewModal
+@{
+    ViewData["Title"] = "OvrView";
+    Layout = "~/Views/Shared/_LayoutOVR.cshtml";
+    var ovrDetails = @Model.OvrDetails.Rows[0];
+    var requesterDetails = @Model.EmployeeDetails.Rows[0];
+    var isWitnessEnabled = false;
+}
+<div class="row">
+    <div class="col-md-7">
+        <div style="background-color:#fff;padding:10px;margin:15px 0;background-color: #ADD8E6;">
+            <div class="row">
+                <div class="col-md-6">
+                    <label class="label-title">Name / Code</label>
+                    <label>
+                        @requesterDetails["EmployeeName"].ToString() /   @requesterDetails["EmpId"].ToString()
+                    </label>
+                </div>
+                <div class="col-md-6">
+                    <label class="label-title">Designation</label>
+                    <label>
+                        @requesterDetails["Designation"].ToString()
+                    </label>
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <label class="label-title">Department</label>
+                    <label>
+                        @requesterDetails["Department"].ToString()
+                    </label>
+                </div>
+                <div class="col-md-6">
+                    <label class="label-title">Join Date</label>
+                    <label>
+                        @requesterDetails["DOJ"].ToString()
+                    </label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <label class="label-title">Email</label>
+                    <label>
+                        @requesterDetails["Email"].ToString()
+                    </label>
+                </div>
+                <div class="col-md-6">
+                    <label class="label-title">Contact</label>
+                    <label>
+                        @*@requesterDetails["Mobile"].ToString()*@
+                    </label>
+                </div>
+            </div>
+            <hr />
+            <div class="row">
+                <div class="col-md-3">
+                    <label class="label-title">OVR Number</label>
+                </div>
+                <div class="col-md-3">
+                    <label>
+                        : <span style="color:#0026ff;font-weight:bold">@ovrDetails["OVRNo"].ToString()</span>
+                    </label>
+                </div>
+                <div class="col-md-3">
+                    <label class="label-title">OVR Date & Time</label>
+                </div>
+                <div class="col-md-3">
+                    <label>
+                        @ovrDetails["Date"].ToString() @ovrDetails["Time"].ToString() 
+                    </label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3">
+                    <label class="label-title">User Category</label>
+                </div>
+                <div class="col-md-9">
+                    <label>
+                        :  @ovrDetails["UserCategory"].ToString()
+                    </label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3">
+                    <label class="label-title">Patient Info</label>
+                </div>
+                <div class="col-md-9">
+                    <label>
+                        :  @ovrDetails["PatientInfo"].ToString()
+                    </label>
+                </div>
+            </div>
+            <hr />
+            <div class="row">
+                <div class="col-md-3">
+                    <label class="label-title">Incident Type</label>
+                </div>
+                <div class="col-md-3">
+                    <label>
+                        : @ovrDetails["IncidentType"].ToString()
+                    </label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3">
+                    <label class="label-title">Category</label>
+                </div>
+                <div class="col-md-9">
+                       @foreach(string item in Model.OVRCategory)
+                       {
+                        <div class="highlight-lreg"> @item </div><br />
+                       }
+                    </div>
+            </div>
+            <hr />
+            <div class="row">
+                <div class="col-md-3">
+                    <label class="label-title">OVR Subject</label>
+                </div>
+                <div class="col-md-9">
+                    <label>
+                        : @ovrDetails["OVRSubject"].ToString()
+                    </label>
+                </div>
+            </div>
+
+
+
+            <label class="label-title">OVR Description</label>
+            <div class="light-box">
+                @Html.Raw(ovrDetails["Description"].ToString())
+            </div>
+            <hr />
+
+            <div>
+                <label class="label-title">Witness</label>
+
+                <div class="light-box">
+                    @{
+                        var counter = 0;
+                    }
+                    @if (@Model.WitnessDetails != null)
+                    {
+                        @foreach (System.Data.DataRow item in @Model.WitnessDetails.Rows)
+                        {
+                            counter++;
+                            <div style="margin:5px 10px" background-color: #ADD8E6>
+                                @counter. @item["Employee"].ToString(), @item["Designation"].ToString(), @item["Department"].ToString()
+
+                                @if (Model.User.EmpCode == @item["EmpCode"].ToString() &&
+                               @item["ActionStatus"].ToString() == "REQ")
+                                {
+                                    isWitnessEnabled = true;
+                                }
+
+                                @if (item["ActionStatus"].ToString() == "ACK")
+                                {
+                                    <div style="margin: 3px 10px; background-color: #ffffff; padding: 5px 10px; border-radius: 6px;">
+                                        <div style="text-align:right;color:#808080;">@item["ActionDate"].ToString()</div>
+                                        @Html.Raw(item["Comment"].ToString())
+                                    </div>
+                                }
+
+                            </div>
+
+                        }
+                    }
+                </div>
+            </div>
+            <hr />
+            <div>
+                <label class="label-title">Actions</label>
+                @{
+                    counter = 0;
+                }
+                @if (@Model.ActionDetails != null)
+                {
+                    @foreach (System.Data.DataRow item in @Model.ActionDetails.Rows)
+                    {
+                        counter++;
+
+                        var comment = item["ActionComment"].ToString();
+                        var bgstyle = "background-color:#f3fff3;border: solid 1px #00c100;border-radius: 6px;";
+                        if (comment == "")
+                        {
+                            bgstyle = "background-color:#f8f3f3;border: solid 1px #e78181;border-radius: 6px;";
+                            comment = "[Pending]";
+                        }
+
+                        <div style="margin:5px 0; padding:5px 10px; @bgstyle">
+                            <h5>@item["AuthorityName"].ToString()</h5>
+                            <b>Assigned  Date :</b> @item["CreatedAt"].ToString()
+                         
+                            <label class="label-title">Comment</label>
+                            <div>
+                                @Html.Raw(item["Remarks"].ToString())
+                            </div>
+                            <hr />
+                            Action Type : <b style="color: #C70039 ">@item["ActionType"].ToString()</b><br />
+                            <b>Action  Date :</b> @item["ActionDate"].ToString()<br />
+                            <label class="label-title">Action Comment</label>
+                            <div style="background-color:#fff">
+                                @Html.Raw(comment)
+                            </div>
+
+                        </div>
+                    }
+                }
+            </div>
+        </div>
+    </div>
+    <div class="col-md-5">
+
+
+
+        <div style="background-color:#fff;padding: 5px 10px;margin:15px 0;">
+            <label class="label-title">Attachments</label>
+            <section>
+                <Ol>
+                    @{
+                        if (@Model.Files != null)
+                        {
+                            foreach (var fitem in @Model.Files)
+                            {
+                                <li>[ @fitem.FileType ] : <a target="_blank" href="/file/@fitem.FilePath">@fitem.FileName</a></li>
+                            }
+                        }
+                    }
+                </Ol>
+            </section>
+            <hr />
+
+
+            @if (isWitnessEnabled)
+            {
+                <div id="ovrwitness">
+                    <label>Witness Comment</label>
+                    <textarea id="tawc" class="form-control"></textarea><br />
+                    <input type="button" onclick="ovr.wcupdate()" id="btnwc" class="btn btn-info btn-sm" value="Submit" />
+                    <hr />
+                </div>
+            }
+
+            @if (Model.EnableActionPanel)
+            {
+                <h6>Requests for My Action</h6>
+                <div class="light-box-red">
+                    @if (@Model.ActionRequest != null)
+                    {
+                        <label class="label-title">Action Type : </label>
+                        <select class="form-control" id="selactrtype">
+                            @foreach (System.Data.DataRow item in @Model.ActionRequest.Rows)
+                            {
+                                <option value="@item["Id"].ToString()">
+                                    @item["ActionTypeText"]
+                                </option>
+                            }
+                        </select>
+                        <div style="display:none; font-size:11px;margin:5px;background-color:#fff;padding:5px 10px;">
+                            @foreach (System.Data.DataRow item in @Model.ActionRequest.Rows)
+                            {
+                                @item["Remarks"]
+                            }
+                        </div>
+                        <label class="label-title">Action Comment</label>
+                        <textarea id="talactrtype" class="form-control" style="height:110px;margin:5px 0"></textarea>
+
+
+                        <div style="margin:20px 0">
+                            <label>Attach Evidence  <a href="#" id="filetrigger">Add +</a></label>
+                            <input type="file" multiple id="ifile" accept="image/*" style="display:none;" />
+                            <div id="fileList"></div>
+                        </div>
+
+
+                        <div class="text-right">
+                            <input type="button" onclick="ovr.actreqcomnt();" id="btnactnreq" class="btn btn-success btn-sm" value="Save" />
+                        </div>
+
+                        <hr />
+                    }
+
+                </div>
+                <hr />
+            }
+            @if (Model.User.Admin)
+            {
+                <h5 class="text-center"> ~~~ Admin ~~~</h5>
+                <div style="margin:0" class="light-box">
+                    <label class="label-title">Assign or forward to</label>
+                    <div style="position:relative">
+                        <input type="text" placeholder="Search Employee" class="form-control" id="txshemp" />
+                    </div>
+                    <div id="dvsremp" style="margin:10px 0">
+                    </div>
+                    <div>
+                        <label class="label-title">Action</label>
+                        <select id="rctionsel" class="form-control multisel-2" name="states[]" multiple="multiple">
+                            <option value="RCA">RCA</option>
+                            <option value="IE">Internal Enquiry</option>
+                            <option value="CA">CA</option>
+                            <option value="PA">PA</option>
+                        </select>
+                    </div>
+                    <label class="label-title">Comment</label>
+                    <textarea id="tanetactn" class="form-control"></textarea><br />
+                    <div class="text-right">
+                        <input type="button" onclick="ovr.acrequ();" id="btnetactn" class="btn btn-danger btn-sm" value="Save" />
+                    </div><hr />
+                </div>
+                <div id="ovractpnl">
+                    <div class="light-box">
+                        <label class="label-title">Incident Type</label>
+
+                        @{
+                            var icdTypes = new List<string>()
+                    {
+                    "Near Miss",
+                    "No Harm",
+                    "Adverse Event",
+                    "Sentinel Event",
+                    "Unknown"
+                    };
+
+                            var icdTypesSelected = ovrDetails["IncidentType"].ToString();
+                            var setselected = "";
+                        }
+                        <select class="form-control" id="selicdtype">
+                            <option>Select</option>
+                            @foreach (string litem in icdTypes)
+                            {
+                                setselected = "";
+                                if (litem == icdTypesSelected)
+                                {
+                                    <option selected value="@litem">@litem</option>
+                                }
+                                else
+                                {
+                                    <option value="@litem">@litem</option>
+                                }
+                            }
+                        </select>
+                        <div class="text-right" style="margin:5px;">
+                            <input type="button" onclick="ovr.acreqact('T');" class="btn btn-info btn-sm" value="Save" />
+                        </div>
+                        <br />
+                        <label class="label-title">Category</label>
+                        <select id="ovrcat" name="cat[]" class="form-control" multiple="multiple">
+                        </select>
+
+                        <div class="text-right" style="margin-top:5px;">
+                            <input type="button" onclick="ovr.acreqact('C');" id="" class="btn btn-info btn-sm" value="Save" />
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+        <div>
+            <input type="hidden" value="@Model.OvrId" id="_ovr" />
+        </div>
+    </div>
+</div>
+@section Scripts
+    {
+<script src="~/js/site.js"></script>
+<script src="~/js/bc-webkit.js"></script>
+<script>
+    $(document).ready(function () {
+        $('.multisel-2').select2();
+    });
+</script>
+<style>
+    hr {
+        margin: 0 0 2px 0;
+        border-bottom: 1px #808080;
+    }
+</style>
+}
